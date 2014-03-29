@@ -4,7 +4,7 @@ var my = {};
 
 exports.Matrix = function(data, numCols, numRows) {
     if (Object.getPrototypeOf(this) !== exports.Matrix.prototype) {
-        throw new Error("Constructors must be called with new");
+        throw new Error("Constructor must be called with new");
     }
     
     if (data.length !== numCols * numRows) {
