@@ -8,7 +8,7 @@ describe("matrix", function() {
     
     describe('constructor', function() {
         it('should exist', function() {
-            var mat = new matrix.Matrix(data, 3, 3);
+            should.exist(matrix.Matrix);
         });
         
         it('should throw if new is omitted', function() {
@@ -69,5 +69,11 @@ describe("matrix", function() {
                 }
             }
         });
+    });
+    
+    it('should support non-square matrices', function() {
+        var data = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+        var mat = new matrix.Matrix(data, 2, 5);
+        should.exist(mat);
     });
 });
