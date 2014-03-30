@@ -40,8 +40,8 @@ describe('mint', function() {
             var user = mnt.create('user');
             user.should.have.properties({
                 id: 1,
-                firstName: "Matt",
-                lastName: "Dickens"
+                firstName: 'Matt',
+                lastName: 'Dickens'
             });
         });
         
@@ -50,6 +50,31 @@ describe('mint', function() {
                 var user = mnt.create('user');
             }).throw(/register/);
         }); 
+        
+        it('should let you create modified objects', function() {
+            mnt.define('user', User);
+            var user = mnt.create('user', {
+                id: 2
+            });
+            user.should.have.properties({
+                id: 2,
+                firstName: 'Matt',
+                lastName: 'Dickens'
+            });
+        });
+        
+        it('should let you create extended objects', function() {
+            mnt.define('user', User);
+            var user = mnt.create('user', {
+                hairColor: 'Ginger'
+            });
+            user.should.have.properties({
+                id: 1,
+                firstName: 'Matt',
+                lastName: 'Dickens',
+                hairColor: 'Ginger'
+            });
+        });
     });
     
     it('should support multiple independent instances', function() {

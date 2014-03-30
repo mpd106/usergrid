@@ -3,6 +3,13 @@
 exports.Mint = function() {
     var map = {};
     
+    var copyProperties = function(from, to) {
+        var property;
+        for (property in from) {
+            to[property] = from[property];
+        }
+    };
+    
     if (Object.getPrototypeOf(this) !== exports.Mint.prototype) {
         throw new Error("Constructor must be called with new");
     }
@@ -12,10 +19,20 @@ exports.Mint = function() {
     };
     
     this.create = function(name) {
+        var obj,
+            additional;
+        
         if (typeof map[name] === 'undefined') {
             throw new Error('You must first register a constructor with define');
         }
 
-        return new map[name]();
+        obj = new map[name]();
+        
+        if (arguments.length > 1) {
+            additional = arguments[1];
+            copyProperties(additional, obj);
+        }
+        
+        return obj;
     };
 };
