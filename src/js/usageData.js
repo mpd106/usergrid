@@ -1,7 +1,5 @@
 /* global exports */
 
-var my = {};
-
 // TODO: This is really an array comparison function--find a home for it
 var compareEventNames = function(first, second) {
     if (first === second) { return true; }
@@ -16,6 +14,11 @@ var compareEventNames = function(first, second) {
     }
     
     return true;
+};
+
+// TODO: This is really just an array copy--find a home for it
+var copyEventNames = function(eventNames) {
+    return eventNames.slice(0);
 };
 
 var getEventNamesFromUser = function(user) {
@@ -39,6 +42,8 @@ var getEventNames = function(data) {
 };
 
 exports.UsageData = function(data) {
+    var eventNames;
+    
     if (Object.getPrototypeOf(this) !== exports.UsageData.prototype) {
         throw new Error('Constructor must be called with new');
     }
@@ -47,5 +52,10 @@ exports.UsageData = function(data) {
         throw new Error('Data must contain at least one user');
     }
     
-    my.eventNames = getEventNames(data);
+    eventNames = getEventNames(data);
+    
+    // TODO: memoize
+    this.getEventNames = function() {
+        return copyEventNames(eventNames);
+    };
 };
