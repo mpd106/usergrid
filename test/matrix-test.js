@@ -71,6 +71,15 @@ describe("matrix", function() {
         });
     });
     
+    it('should support multiple independent instances', function() {
+        var firstData = [1, 2, 3, 4, 5, 6];
+        var secondData = [7, 8, 9, 10];
+        var first = new matrix.Matrix(firstData, 2, 3);
+        var second = new matrix.Matrix(secondData, 2, 2);
+        
+        first.getRows().length.should.not.equal(second.getRows().length);
+    });
+    
     it('should support non-square matrices', function() {
         var data = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
         var mat = new matrix.Matrix(data, 2, 5);
