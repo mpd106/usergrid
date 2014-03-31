@@ -1,7 +1,7 @@
 /* global require, describe, it */
 
-var should = require('./lib/should');
-var matrix = require('../src/js/matrix');
+var should = require('../lib/should');
+var matrix = require('../../src/js/data/matrix');
 
 describe("matrix", function() {
     var data = [1, 2, 3, 4, 5, 6, 7, 8, 9];

@@ -1,8 +1,9 @@
 /* global require, describe, it */
 
-var should = require('./lib/should');
-var usageData = require('../src/js/usageData');
-var dataFactory = require('./Factories/usageDataFactory');
+var should = require('../lib/should');
+var dummyEventNameProcessor = require('./dummyEventNameProcessor');
+var usageData = require('../../src/js/data/usageData')(dummyEventNameProcessor);
+var dataFactory = require('../Factories/usageDataFactory');
 
 describe('usageData', function() {
     describe('constructor', function() {
@@ -19,17 +20,6 @@ describe('usageData', function() {
         it("should require at least one user", function() {
             var testData = [];
             should(function() { new usageData.UsageData(testData); }).throw(/one user/);
-        });
-
-        it("should throw if event names don't match", function() {
-            var testData = dataFactory.create('standard', {
-                0: {
-                       'one.more.thing': 10
-                }
-            });
-            should(function() {
-                new usageData.UsageData(testData);
-            }).throw(/event names/);
         });
     });
     
