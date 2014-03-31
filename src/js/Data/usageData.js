@@ -1,5 +1,11 @@
 /* global module */
 
+
+// TODO: This is really just an array copy--find a home for it
+var copyEventNames = function(eventNames) {
+    return eventNames.slice(0);
+};
+
 module.exports = function(eventNameProcessor) {
     var UsageData = function(data) {
         var eventNames;
@@ -12,7 +18,7 @@ module.exports = function(eventNameProcessor) {
             throw new Error('Data must contain at least one user');
         }
 
-        eventNames = getEventNames(data);
+        eventNames = eventNameProcessor.getEventNames(data);
 
         // TODO: memoize
         this.getEventNames = function() {

@@ -17,11 +17,6 @@ exports.EventNameProcessor = function() {
         return true;
     };
 
-    // TODO: This is really just an array copy--find a home for it
-    var copyEventNames = function(eventNames) {
-        return eventNames.slice(0);
-    };
-
     var getEventNamesFromUser = function(user) {
         return Object.keys(user);
     };
@@ -29,9 +24,15 @@ exports.EventNameProcessor = function() {
     this.getEventNames = function(data) {
         var headers = [],
             userIndex,
-            firstUserEventNames = getEventNamesFromUser(data[0]),
+            firstUserEventNames,
             currentUserEventNames;
 
+        if (data.length < 1) {
+            throw new Error('Data must contain at least one user');
+        }
+        
+        firstUserEventNames = getEventNamesFromUser(data[0]);
+        
         for (userIndex = 1; userIndex < data.length; userIndex++) {
             currentUserEventNames = getEventNamesFromUser(data[userIndex]);
             if (!compareEventNames(firstUserEventNames, currentUserEventNames)) {

@@ -1,8 +1,9 @@
 /* global require, describe, it */
 
 var should = require('../lib/should');
-var dummyEventNameProcessor = require('./dummyEventNameProcessor');
-var usageData = require('../../src/js/data/usageData')(dummyEventNameProcessor);
+var dummyEventNameProcessor = require('./dummyEventNameProcessor'),
+    dummy = new dummyEventNameProcessor.DummyEventNameProcessor();
+var usageData = require('../../src/js/data/usageData')(dummy);
 var dataFactory = require('../Factories/usageDataFactory');
 
 describe('usageData', function() {

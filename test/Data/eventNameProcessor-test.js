@@ -12,18 +12,39 @@ describe('eventNameProcessor', function() {
     });
     
     describe('getEventNames', function() {
+        var processor = new eventNameProcessor.EventNameProcessor();
+        
+        it("should require at least one user", function() {
+            var testData = [];
+            should(function() { processor.getEventNames(testData); }).throw(/one user/);
+        });
+        
         it('should return an array', function() {
-            var processor = new eventNameProcessor.EventNameProcessor();
             var testData = dataFactory.create('standard');
             processor.getEventNames(testData).should.be.an.instanceOf(Array);
         });
         
         it('should return a list of correct names', function() {
-            throw Error('not implemented');
+            var testData = dataFactory.create('standard'),
+                eventNames = processor.getEventNames(testData);
+            eventNames.should.containDeep([
+                'first.thing',
+                'second.thing',
+                'third.thing',
+                'fourth.thing',
+                'fifth.thing'
+            ]);
         });
         
         it('should throw if event names are inconsistent across users', function() {
-            throw Error('not implemented');
+            var testData = dataFactory.create('standard', {
+                0: {
+                    'one.more.thing': 10
+                }
+            });
+            should(function() {
+                processor.getEventNames(testData);
+            }).throw(/names must match/);
         });
     });
 });
