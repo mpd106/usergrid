@@ -11,21 +11,21 @@ var User = function() {
 
 describe('mint', function() {
     var mnt;
-    
+
     beforeEach(function() {
         mnt = new mint.Mint();
     });
-    
+
     describe('constructor', function() {
         it('should exist', function() {
             should.exist(mint.Mint);
         });
-        
+
         it('should throw an exception if called without new', function() {
             should(function() { mint.Mint(); }).throw(/new/);
         });
     });
-    
+
     describe('define', function() {
         it('should let you register an objet constructor', function() {
             should(function() {
@@ -33,7 +33,7 @@ describe('mint', function() {
             }).not.throw();
         });
     });
-    
+
     describe('create', function() {
         it('should let you instantiate a registered object', function() {
             mnt.define('user', User);
@@ -44,13 +44,13 @@ describe('mint', function() {
                 lastName: 'Dickens'
             });
         });
-        
+
         it('should throw an exception on creating an unregistered object', function() {
             should(function() {
-                var user = mnt.create('user');
+                mnt.create('user');
             }).throw(/register/);
-        }); 
-        
+        });
+
         it('should let you create modified objects', function() {
             mnt.define('user', User);
             var user = mnt.create('user', {
@@ -62,7 +62,7 @@ describe('mint', function() {
                 lastName: 'Dickens'
             });
         });
-        
+
         it('should let you create extended objects', function() {
             mnt.define('user', User);
             var user = mnt.create('user', {
@@ -76,11 +76,11 @@ describe('mint', function() {
             });
         });
     });
-    
+
     it('should support multiple independent instances', function() {
         var first = new mint.Mint(),
             second = new mint.Mint();
-        
+
         first.define('user', User);
         should(function() { second.create('user'); }).throw(/register/);
     });
