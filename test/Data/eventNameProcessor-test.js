@@ -1,6 +1,7 @@
 /* global require, describe, it */
 
-var eventNameProcessor = require('../../src/js/Data/eventNameProcessor');
+var arrayUtils = require('../../src/js/Utils/arrayUtils');
+var eventNameProcessor = require('../../src/js/Data/eventNameProcessor')(arrayUtils);
 var dataFactory = require('../Factories/usageDataFactory');
 var should = require('../lib/should');
 
@@ -10,20 +11,20 @@ describe('eventNameProcessor', function() {
             should.exist(eventNameProcessor.EventNameProcessor);
         });
     });
-    
+
     describe('getEventNames', function() {
         var processor = new eventNameProcessor.EventNameProcessor();
-        
+
         it("should require at least one user", function() {
             var testData = [];
             should(function() { processor.getEventNames(testData); }).throw(/one user/);
         });
-        
+
         it('should return an array', function() {
             var testData = dataFactory.create('standard');
             processor.getEventNames(testData).should.be.an.instanceOf(Array);
         });
-        
+
         it('should return a list of correct names', function() {
             var testData = dataFactory.create('standard'),
                 eventNames = processor.getEventNames(testData);
@@ -35,7 +36,7 @@ describe('eventNameProcessor', function() {
                 'fifth.thing'
             ]);
         });
-        
+
         it('should throw if event names are inconsistent across users', function() {
             var testData = dataFactory.create('standard', {
                 0: {
